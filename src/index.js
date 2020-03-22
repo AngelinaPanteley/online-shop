@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { App } from './components';
 import * as serviceWorker from './serviceWorker';
+import WebFont from 'webfontloader';
+
+WebFont.load({
+  google: {
+    families: ['Lobster:400,700', 'Sen:300,400,600', 'sans-serif']
+  }
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
