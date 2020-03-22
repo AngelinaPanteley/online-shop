@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 
 import { Header, MainPage, ProductPage } from "../../components";
 import axios from "../../axios-order";
 import { Theme, GlobalStyle } from "../../styles";
 
+export const BasketContext = createContext({
+  products: [],
+  addToBasket: () => {}
+});
+
 export const App = () => {
   const [storeData, setStoreData] = useState();
   const [currentProduct, setCurrentProduct] = useState();
+  const [basketProducts, setBasketProducts] = useState([]);
+  
   useEffect(() => {
     const getStoreData = async () => {
       const response = await axios.get("categories.json");
@@ -19,16 +26,29 @@ export const App = () => {
     getStoreData();
   }, []);
 
-  const handleProductChange = (product) => {
+  const handleProductChange = product => {
     setCurrentProduct(product);
-  }
+  };
+
+  const basketContext = {
+    products: basketProducts,
+    addToBasket: product => {
+      setBasketProducts(products => [...products, product]);
+      console.log([...basketProducts, product]);
+    }
+  };
 
   return (
     <ThemeProvider theme={Theme}>
-      <GlobalStyle />
-      <Header />
-      <MainPage categories={storeData} handleProductClick={handleProductChange}/>
-      <ProductPage product={currentProduct} />
+      <BasketContext.Provider value={basketContext}>
+        <GlobalStyle />
+        <Header />
+        <MainPage
+          categories={storeData}
+          handleProductClick={handleProductChange}
+        />
+        <ProductPage product={currentProduct} />
+      </BasketContext.Provider>
     </ThemeProvider>
   );
 };
