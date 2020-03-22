@@ -2,7 +2,7 @@ import React from "react";
 
 import { StyledMainPage, StyledProducts, StyledProduct, StyledFilter, StyledName } from "./main-page.styled";
 
-export const MainPage = ({ categories }) => {
+export const MainPage = ({ categories, handleProductClick }) => {
   const products = [];
 
   for (let category in categories) {
@@ -19,7 +19,7 @@ export const MainPage = ({ categories }) => {
       <StyledFilter />
       <StyledProducts>
         {products.map(product => (
-          <StyledProduct key={product.name}>
+          <StyledProduct key={product.name} onClick={() => handleProductClick(product)}>
             <img src={product.image} alt={product.name} />
             <StyledName>{product.name}</StyledName>
             <p>p. {product.price}</p>

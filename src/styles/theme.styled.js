@@ -35,6 +35,7 @@ export const Theme = {
     rem(8),
     rem(16),
     rem(32),
+    rem(50),
     rem(64),
     rem(128),
     rem(256)
@@ -51,7 +52,8 @@ export const Theme = {
     },
     mono: {
       black: "#000000",
-      white: "#ffffff"
+      white: "#ffffff",
+      gray: "#ссс",
     },
   }
 };

@@ -19,6 +19,7 @@ export const StyledProduct = styled.div`
   padding: 30px;
   width: calc(100% / 3);
   text-align: center;
+  cursor: pointer;
 
   img {
     width: 100%;
