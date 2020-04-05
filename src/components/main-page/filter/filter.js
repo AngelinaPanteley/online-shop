@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import { StyledFilter } from "./filter.styled";
+import { StyledFilter, StyledLabel } from "./filter.styled";
 import { PriceSlider } from "./price-slider/price-slider";
 import { CategoryCheck } from "./category-check/category-check";
 
@@ -20,13 +20,13 @@ export const Filter = ({ categories, prices }) => {
       const [minPrice, maxPrice] = priceRanges;
       let path = `/`;
 
-      if(minPrice && maxPrice) {
+      if (minPrice && maxPrice) {
         path += `?price=${minPrice}-${maxPrice}`;
       }
 
       Object.keys(categoryCheck).forEach((category) => {
         if (categoryCheck[category]) {
-          path += path.includes('?')? '&' : '?';
+          path += path.includes("?") ? "&" : "?";
           path += `category=${category}`;
         }
       });
@@ -64,18 +64,22 @@ export const Filter = ({ categories, prices }) => {
 
   return (
     <StyledFilter>
-      {!!priceRange.length && (
-        <PriceSlider
-          min={minPrice}
-          max={maxPrice}
-          value={priceRange}
-          onChange={handlePriceChange}
-        />
-      )}
+      <StyledLabel>Category:</StyledLabel>
       <CategoryCheck
         categoryCheck={categoryCheck}
         onChange={handleCategoryChange}
       />
+      {!!priceRange.length && (
+        <>
+          <StyledLabel>Price:</StyledLabel>
+          <PriceSlider
+            min={minPrice}
+            max={maxPrice}
+            value={priceRange}
+            onChange={handlePriceChange}
+          />
+        </>
+      )}
     </StyledFilter>
   );
 };

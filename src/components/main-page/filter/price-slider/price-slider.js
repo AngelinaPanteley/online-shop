@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledThumb, StyledTrack, StyledSlider } from "./price-slider.styled";
+import { StyledThumb, StyledTrack, StyledSlider, StyledSliderValues } from "./price-slider.styled";
 
 const Thumb = (props, state) => (
   <StyledThumb {...props}>{state.valueNow}</StyledThumb>
@@ -7,6 +7,8 @@ const Thumb = (props, state) => (
 const Track = (props, state) => <StyledTrack {...props} index={state.index} />;
 
 export const PriceSlider = ({min, max, value, onChange}) => (
+  <>
+  
   <StyledSlider
     min={min}
     max={max}
@@ -16,5 +18,8 @@ export const PriceSlider = ({min, max, value, onChange}) => (
     renderTrack={Track}
     renderThumb={Thumb}
     onChange={onChange}
+    id="price-slider"
   />
+  <StyledSliderValues><span>p. {value[0]}</span><span>p. {value[1]}</span></StyledSliderValues>
+  </>
 );

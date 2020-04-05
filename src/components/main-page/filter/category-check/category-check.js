@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyledCategoryCheck } from "./category-check.styled";
+import { StyledCategoryCheck, StyledCheckbox, StyledInput } from "./category-check.styled";
 
 export const CategoryCheck = ({ categoryCheck, onChange }) => {
   const categories = Object.keys(categoryCheck);
@@ -13,8 +13,8 @@ export const CategoryCheck = ({ categoryCheck, onChange }) => {
   return (
     <StyledCategoryCheck>
       {categories.map((category) => (
-        <label htmlFor={`${category}-checkbox`} key={category}>
-          <input
+        <React.Fragment key={category}>
+          <StyledInput
             type="checkbox"
             value={category}
             name={category}
@@ -23,8 +23,10 @@ export const CategoryCheck = ({ categoryCheck, onChange }) => {
             onChange={onCategoryChange}
             checked={categoryCheck[category]}
           />
-          {category}
-        </label>
+          <StyledCheckbox htmlFor={`${category}-checkbox`}>
+            {category}
+          </StyledCheckbox>
+        </React.Fragment>
       ))}
     </StyledCategoryCheck>
   );
