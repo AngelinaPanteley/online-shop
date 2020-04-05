@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import { Header, MainPage, ProductPage } from "../../components";
 import axios from "../../axios-order";
@@ -14,7 +15,7 @@ export const App = () => {
   const [storeData, setStoreData] = useState();
   const [currentProduct, setCurrentProduct] = useState();
   const [basketProducts, setBasketProducts] = useState([]);
-  
+
   useEffect(() => {
     const getStoreData = async () => {
       const response = await axios.get("categories.json");
@@ -40,15 +41,25 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={Theme}>
-      <BasketContext.Provider value={basketContext}>
-        <GlobalStyle />
-        <Header />
-        <MainPage
-          categories={storeData}
-          handleProductClick={handleProductChange}
-        />
-        <ProductPage product={currentProduct} />
-      </BasketContext.Provider>
+      <BrowserRouter basename="/">
+        <BasketContext.Provider value={basketContext}>
+          <GlobalStyle />
+          <Header />
+          {storeData && (
+            <Switch>
+              <Route path="/product/:productId">
+                <ProductPage product={currentProduct} />
+              </Route>
+              <Route path="/">
+                <MainPage
+                  storeData={storeData}
+                  handleProductClick={handleProductChange}
+                />
+              </Route>
+            </Switch>
+          )}
+        </BasketContext.Provider>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };

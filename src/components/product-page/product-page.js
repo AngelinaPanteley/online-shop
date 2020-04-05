@@ -38,7 +38,7 @@ export const ProductPage = ({ product }) => {
         <StyledProductPrice>p. {product.price}</StyledProductPrice>
         <p>{product.description}</p>
         <StyledForm>
-          <label for="quantity">Quantity:</label>
+          <label htmlFor="quantity">Quantity:</label>
           <StyledQuantityInput
             type="number"
             id="quantity"
