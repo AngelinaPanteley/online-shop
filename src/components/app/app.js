@@ -13,7 +13,6 @@ export const BasketContext = createContext({
 
 export const App = () => {
   const [storeData, setStoreData] = useState();
-  const [currentProduct, setCurrentProduct] = useState();
   const [basketProducts, setBasketProducts] = useState([]);
 
   useEffect(() => {
@@ -21,15 +20,10 @@ export const App = () => {
       const response = await axios.get("categories.json");
 
       setStoreData(response.data);
-      setCurrentProduct(response.data.category01.products.product01);
     };
 
     getStoreData();
   }, []);
-
-  const handleProductChange = product => {
-    setCurrentProduct(product);
-  };
 
   const basketContext = {
     products: basketProducts,
@@ -48,12 +42,11 @@ export const App = () => {
           {storeData && (
             <Switch>
               <Route path="/product/:productId">
-                <ProductPage product={currentProduct} />
+                <ProductPage storeData={storeData} />
               </Route>
               <Route path="/">
                 <MainPage
                   storeData={storeData}
-                  handleProductClick={handleProductChange}
                 />
               </Route>
             </Switch>

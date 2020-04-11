@@ -8,15 +8,38 @@ export const StyledProducts = styled.div`
   align-items: flex-end;
 `;
 
+export const StyledImage = styled.img`
+  width: 100%;
+`;
+
+export const StyledHoverImage = styled.img`
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+`;
+
+export const StyledImageWrapper = styled.div`
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    ${StyledHoverImage} {
+      display: inline-block;
+    }
+  }
+`;
+
 export const StyledProduct = styled(Link)`
   padding: 30px;
   width: calc(100% / 3);
   text-align: center;
   cursor: pointer;
-
-  img {
-    width: 100%;
-  }
+  color: ${({ theme }) => theme.colors.mono.black};
+  text-decoration: none;
 `;
 
 export const StyledName = styled.p`

@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import { StyledFilter, StyledLabel } from "./filter.styled";
+import { StyledFilter, StyledLabel, StyledClearFilter } from "./filter.styled";
 import { PriceSlider } from "./price-slider/price-slider";
 import { CategoryCheck } from "./category-check/category-check";
 
-export const Filter = ({ categories, prices }) => {
+export const Filter = ({ categories, prices, handleClearFilter }) => {
   const history = useHistory();
   const minPrice = prices.length && Math.min.apply(null, prices);
   const maxPrice = prices.length && Math.max.apply(null, prices);
@@ -37,11 +37,13 @@ export const Filter = ({ categories, prices }) => {
 
   const [categoryCheck, setCategoryCheck] = useState(categoryCheckObject);
   const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
+  const [showClearFilter, setShowClearFilter] = useState(false);
 
   const handlePriceChange = useCallback(
     (range) => {
       updatePath(categoryCheck, range);
       setPriceRange(range);
+      setShowClearFilter(true);
     },
     [updatePath, categoryCheck]
   );
@@ -50,8 +52,19 @@ export const Filter = ({ categories, prices }) => {
     (newCategoryCheck) => {
       updatePath(newCategoryCheck, priceRange);
       setCategoryCheck(newCategoryCheck);
+      setShowClearFilter(true);
     },
     [updatePath, priceRange]
+  );
+
+  const clearFilter = useCallback(
+    () => {
+      setCategoryCheck(categoryCheckObject);
+      setPriceRange([minPrice, maxPrice]);
+      setShowClearFilter(false);
+      handleClearFilter();
+    },
+    [categoryCheckObject, handleClearFilter, minPrice, maxPrice]
   );
 
   useEffect(() => {
@@ -80,6 +93,7 @@ export const Filter = ({ categories, prices }) => {
           />
         </>
       )}
+      {showClearFilter && <StyledClearFilter onClick={clearFilter}>Clear Filter</StyledClearFilter>}
     </StyledFilter>
   );
 };

@@ -3,13 +3,13 @@ import ReactSlider from "react-slider";
 
 export const StyledSlider = styled(ReactSlider)`
   width: 100%;
-  height: 20px;
+  height: 17px;
 `;
 
 export const StyledThumb = styled.div`
-  height: 20px;
-  line-height: 20px;
-  width: 20px;
+  height: 17px;
+  line-height: 17px;
+  width: 17px;
   font-size: 0;
   text-align: center;
   background-color: #000;
@@ -18,6 +18,10 @@ export const StyledThumb = styled.div`
   cursor: grab;
   outline: none;
   color: #000;
+
+  &:active {
+    transform: scale(1.2);
+  }
 `;
 
 export const StyledTrack = styled.div`

@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
 
 import { BasketContext } from "../app/app";
 
@@ -7,24 +8,36 @@ import {
   StyledProductInfo,
   StyledProductPrice,
   StyledForm,
-  StyledQuantityInput
+  StyledQuantityInput,
 } from "./product-page.styled";
 
-export const ProductPage = ({ product }) => {
+export const ProductPage = ({ storeData }) => {
+  const { productId } = useParams();
+  const allProducts = useMemo(()=> {
+    let products = {};
+    for(let category in storeData) {
+      products = { ...products, ...storeData[category].products};
+    }
+    return products;
+  }, [storeData]);
   const [quantity, setQuantity] = useState(0);
+  const [product, setProduct] = useState(allProducts[productId]);
   const basketContext = useContext(BasketContext);
-  if (!product) return null;
+  
+  useEffect(() => {
+    setProduct(allProducts[productId]);
+  }, [productId, allProducts]);
 
-  const onQuantityChange = event => {
+  const onQuantityChange = (event) => {
     setQuantity(event.target.value);
   };
 
-  const onSubmit = event => {
+  const onSubmit = (event) => {
     event.preventDefault();
 
     const basketProduct = {
       ...product,
-      quantity
+      quantity,
     };
 
     basketContext.addToBasket(basketProduct);

@@ -12,41 +12,38 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledCheckbox = styled.label`
-  display: inline-block;
   position: relative;
   padding-left: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   cursor: pointer;
 
   &:before {
     content: "";
-    display: inline-block;
-    height: 15px;
     width: 15px;
-    border-radius: 2px;
+    height: 15px;
     border: 1px solid #000;
-    margin-right: 5px;
+    border-radius: 3px;
+    display: inline-block;
     position: absolute;
-    top: 3px;
     left: 0;
+    top: 2px;
   }
 
   &:after {
     content: "";
-    display: inline-block;
+    height: 10px;
+    width: 5px;
     border: 2px solid #000;
-    border-top: 0;
     border-left: 0;
-    width: 6px;
-    height: 12px;
+    border-top: 0;
     transform: rotate(45deg);
-    opacity: 0;
     position: absolute;
-    top: 3px;
-    left: 4px;
+    left: 6px;
+    top: 4px;
+    display: none;
   }
 
   input:checked + &:after {
-    opacity: 1;
+    display: inline-block;
   }
 `;
